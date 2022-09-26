@@ -27,8 +27,9 @@ class Role extends Model
 		return self::STATUSES;
 	}
 
-    public function users()
+	public function character()
     {
-        return $this->belongsToMany('App\Models\User', 'user_roles');
+        return $this->hasMany(Character::class);
     }
+
 }

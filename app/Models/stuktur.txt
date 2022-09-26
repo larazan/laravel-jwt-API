@@ -1,0 +1,46 @@
+Person
+
+    Movie
+        MovieCategory
+        Genre
+        Country
+        Tag
+
+        Season
+            Episode
+
+        Discussion
+        Review
+        Rating
+
+        
+    Music
+
+    Role
+        Character
+
+Article
+    CategoryArticle
+    Comment
+        Like
+
+Ecomm
+
+    Product
+        Brand
+        Category
+        Attribute
+        
+        ProductReview
+
+    Basket
+
+    Order
+
+    Shipment
+
+User
+
+Slide
+
+Setting

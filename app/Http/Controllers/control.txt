@@ -1,0 +1,29 @@
+MovieController    --api
+MovieCategoryController    --api
+EpisodeController       --api
+SeasonController        --api
+GenreController         --api
+MovieGenreController        --api
+RatingController
+MovieReviewController          --api
+PersonController        --api
+RoleController          --api
+CharacterController         --api
+CommentController       --api
+LikeController
+DiscussionController        --api
+CountryController       --api
+MusicController         --api
+CategoryArticleController       --api
+ArticleController           --api
+ArticleCommentController        --api       
+CommentLikeController
+PodcastController       --api
+CategoryController      --api
+BrandController         --api
+ProductController       --api         
+ReviewController        --api
+ProductReviewController     
+OrderController
+ShipmentController
+SlideController     --api

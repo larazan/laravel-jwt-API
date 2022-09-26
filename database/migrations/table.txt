@@ -1,0 +1,382 @@
+Movie
+            create_movie_categories_table
+                id bigint
+                name varchar
+                slug varchar(191)
+
+            create_movies_table
+                id bigint
+                title varchar
+                slug varchar(191)
+                description text
+                year int
+                duration int
+                original varchar(191)
+                large varchar(191)
+                small varchar(191)
+                status varchar(191)
+
+            create_tags_table
+                id bigint(20)
+                name varchar(191)
+                slug varchar(191)
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_taggables_table
+                tag_id bigint
+                taggable_id bigint
+                taggable_type varchar
+
+            create_episodes_table
+                id bigint
+                movie_id bigint
+                season_id bigint
+                title varchar
+                short_description text
+                release_date int
+                duration int
+                original varchar(191)
+                large varchar(191)
+                small varchar(191)
+                status varchar(191)
+
+            create_seasons_table
+                id bigint
+                movie_id bigint
+                title varchar
+                year int
+
+            create_genres_table
+                id bigint(20)
+                name varchar(191)
+                slug varchar(191)
+
+            create_movie_genres_table
+                id bigint(20)
+                movie_id bigint(20)
+                genre_id bigint(20)
+
+            create_ratings_table
+                id bigint(20)
+                movie_id bigint(20)
+                user_id
+                rate int
+
+            create_movie_reviews_table
+                id bigint(20)
+                body text
+                user_id
+                movie_id
+
+            create_persons_table
+                id bigint(20)
+                gender varchar
+                bio text
+                birth date
+
+            create_roles_table
+                id bigint(20)
+                name
+
+            create_characters_table
+                id bigint(20)
+                movie_id
+                person_id
+                role_id
+                character_name
+
+            create_comments_table
+                id bigint(20)
+                body text
+                comment_id
+                user_id
+                person_id
+
+            create_likes_table
+                id bigint(20)
+                comment_id
+                user_id
+
+            create_discussions_table
+
+            create_countries_table
+                id bigint(20)
+                name
+                status
+
+Music
+
+            create_musics_table
+                id bigint(20)
+                title
+                person_id
+                album
+                description
+                original varchar(191)
+                small varchar(191)
+                file
+                duration
+                user_id
+                status
+
+News
+
+            create_category_articles_table
+                id bigint
+                article_id bigint
+                category_article_id bigint
+
+            create_articles_table
+                id bigint(20)
+                title varchar
+                slug varchar
+                article_type varchar
+                published_at datetime
+                status int
+                body text
+                featured_image varchar
+                author varchar
+                user_id bigint
+                deleted_at timestamp
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_article_images_table
+                id bigint(20)
+                imageable_id bigint(20)
+                imageable_type varchar
+                original varchar(191)
+                large varchar(191)
+                medium varchar(191)
+                small varchar(191)
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_article_comments_table
+                id bigint(20)
+                body text
+                article_comment_id
+                user_id
+                article_id
+
+            create_comment_likes_table
+                id bigint(20)
+                article_comment_id
+                user_id
+
+            create_article_categories_table
+                id bigint(20)
+                article_id bigint(20)
+                category_article_id bigint(20)
+
+User
+
+            create_users_table
+                
+
+Podcast
+            create_podcasts_table
+                id bigint(20)
+                title 
+                description
+                original varchar(191)
+                small varchar(191)
+                file
+                user_id
+
+Store
+            
+            create_categories_table
+                id bigint(20)
+                name varchar(191)
+                slug varchar(191)
+                parent_id bigint(20)
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_brands_table
+                id bigint(20)
+                name varchar(191)
+                slug varchar(191)
+                status varchar(191)
+                original varchar(191)
+                extra_large varchar(191)
+                small varchar(191)
+                created_at timestamp()
+                updated_at timestamp()
+                
+            create_products_table
+                id bigint(20)
+                parent_id bigint(20)
+                user_id bigint(20)
+                sku varchar(191)
+                type varchar(191)
+                name varchar(191)
+                slug varchar(191)
+                price decimal(15,2)
+                weight decimal(15,2)
+                width decimal(10,2)
+                height decimal(10,2)
+                length decimal(10,2)
+                short_description text
+                description text
+                status int(11)
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_attributes_table
+                id bigint(20)
+                code varchar(191)
+                name varchar(191)
+                type varchar(191)
+                validation varchar(191)
+                is_required tinyint(1)
+                is_unique tinyint(1)
+                is_filterable tinyint(1)
+                is_configurable tinyint(1)
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_product_brands_table
+                id bigint(20)
+                product_id bigint(20)
+                brand_id bigint(20)
+
+            create_product_attribute_values_table
+                id bigint(20)
+                parent_product_id bigint(20)
+                product_id bigint(20)
+                attribute_id bigint(20)
+                text_value text
+                boolean_value tinyint(1)
+                integer_value int(11)
+                float_value decimal(8,2)
+                datetime_value datetime
+                date_value date
+                json_value text
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_product_inventories_table
+                id bigint(20)
+                product_id bigint(20)
+                qty int(11)
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_product_categories_table
+                id bigint(20)
+                product_id bigint(20)
+                category_id bigint(20)
+
+            create_product_images_table
+                id bigint(20)
+                product_id bigint(20)
+                path text
+                extra_large varchar(191)
+                large varchar(191)
+                medium varchar(191)
+                small varchar(191)
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_attribute_options_table
+                id bigint(20)
+                attribute_id bigint(20)
+                name varchar(191)
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_reviews_table
+                id bigint(20)
+                name varchar(191)
+                email varchar(191)
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_product_reviews_table
+                id bigint(20)
+                product_id bigint(20)
+                review_id bigint(20)
+
+            create_orders_table
+                id bigint
+                user_id bigint
+                code varchar
+                status varchar
+                order_date datetime
+                payment_due datetime
+                payment_status varchar
+                payment_token varchar
+                payment_url varchar
+                base_total_price decimal(16,2)
+                tax_amount decimal(16,2)
+                tax_percent decimal(16,2)
+                discount_amount decimal(16,2)
+                discount_percent decimal(16,2)
+                shipping_cost decimal(16,2)
+                grand_total decimal(16,2)
+                note text
+                customer_first_name varchar
+                customer_last_name varchar
+                customer_address1 varchar
+                customer_address2 varchar
+                customer_phone varchar
+                customer_email varchar
+                customer_city_id varchar
+                customer_province_id varchar
+                customer_postcode int
+                shipping_courier varchar
+                shipping_service_name varchar
+                approved_by bigint        
+                approved_at datetime
+                cancelled_by bigint
+                cancelled_at datetime
+                cancellation_note text        
+                deleted_at timestamp()
+                created_at timestamp()
+                updated_at timestamp()
+        
+            create_order_items_table
+                id bigint
+                order_id bigint
+                product_id bigint
+                qty int
+                base_price decimal(16,2)
+                base_total decimal(16,2)
+                tax_amount decimal(16,2)
+                tax_percent decimal(16,2)
+                discount_amount decimal(16,2)
+                discount_percent decimal(16,2)
+                sub_total decimal(16,2)
+                sku varchar
+                type varchar
+                name varchar
+                weight varchar
+                attributes text
+                created_at timestamp()
+                updated_at timestamp()
+
+            create_shipments_table
+                id bigint
+                user_id bigint
+                order_id bigint
+                track_number varchar
+                status varchar
+                total_qty int
+                total_weight int
+                first_name varchar
+                last_name varchar
+                address1 varchar
+                address2 varchar
+                phone varchar
+                email varchar
+                city_id varchar
+                province_id varchar
+                postcode int
+                shipped_by bigint
+                shipped_at datetime
+                deleted_at timestamp()
+                created_at timestamp()
+                updated_at timestamp()
