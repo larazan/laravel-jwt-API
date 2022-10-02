@@ -6,6 +6,7 @@ GenreController         --api
 MovieGenreController        --api
 RatingController
 MovieReviewController          --api
+MovieLikeController         
 PersonController        --api
 RoleController          --api
 CharacterController         --api
@@ -17,13 +18,13 @@ MusicController         --api
 CategoryArticleController       --api
 ArticleController           --api
 ArticleCommentController        --api       
-CommentLikeController
+CommentLikeController   
 PodcastController       --api
 CategoryController      --api
 BrandController         --api
 ProductController       --api         
 ReviewController        --api
-ProductReviewController     
-OrderController
-ShipmentController
+ProductReviewController     --api
+OrderController     
+ShipmentController      
 SlideController     --api

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Article;
 use App\Models\ArticleComment;
@@ -24,8 +25,35 @@ class ArticleCommentController extends Controller
         $user = auth()->user();
 
         $comment = $user->articleComments()->create([
+            'user_id' => Auth::user()->id,
             'article_id' => $article_id,
             'body' => $request->body,
+        ]);
+
+        return response()->json([
+            "success" => true,
+            "message" => "Comment successfully added!",
+            "data" => $comment
+        ]);
+    }
+
+    public function reply(Request $request, $article_id, $comment_id)
+    {
+        $validator = Validator::make($request->all(), [
+            'body' => 'required', 
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 422);
+        }
+
+        $user = auth()->user();
+        $comment = ArticleComment::find($comment_id);
+        $comment = $user->articleComments()->create([
+            'user_id' => Auth::user()->id,
+            'article_id' => $article_id,
+            'body' => $request->body,
+            'article_comment_id' => $comment->article_comment_id ? $comment->article_comment_id : $comment->id
         ]);
 
         return response()->json([

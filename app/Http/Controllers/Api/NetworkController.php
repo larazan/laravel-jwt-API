@@ -9,9 +9,9 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
-use App\Models\Movie;
+use App\Models\Network;
 
-class MovieController extends Controller
+class NetworkController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,12 +20,12 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::get();
+        $networks = Network::get();
 
         return response()->json([
             "success" => true,
-            "message" => "Movie berhasil ditampilkan!",
-            "data" => $movies
+            "message" => "Network berhasil ditampilkan!",
+            "data" => $networks
         ]);
     }
 
@@ -38,71 +38,55 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
-            'person_id' => 'required|numeric',            
-            'user_id' => 'required|numeric',            
-            'album' => 'required|string',
-            'description' => 'required|string',
-            'audio' => 'required|string',
-            'duration' => 'required|numeric',
-            'country' => 'required|string',
-            'network' => 'required',
-            'genre' => 'required',
+            'name' => 'required|string',
+            'country' => 'required',
+            'site' => 'required',
             'status' => 'required|string',
             // 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
-            // 'audio' => 'nullable|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
             'original' => '',
             'medium' => '',
             'small' => '',
         ]); 
-       
+      
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 422);
         }
 
         try {
             $image = $request->file('image');
-            $rand = Str::random(18);
 
             if ($image) {
-                $name = Str::slug($request->title) . '_' . time();
+                $name = Str::slug($request->name) . '_' . time();
                 $fileName = $name . '.' . $image->getClientOriginalExtension();
-                $folder = Movie::UPLOAD_DIR;
+                $folder = Network::UPLOAD_DIR;
                 $filePath = $image->storeAs($folder . '/original', $fileName, 'public');
                 $resizedImage = $this->_resizeImage($image, $fileName, $folder);
 
                 $original = $filePath;
-                $medium =  $resizedImage['medium'];
+                $medium = $resizedImage['medium'];
                 $small = $resizedImage['small'];
             } else {
                 $original = '';
-                $medium =  '';
+                $medium = '';
                 $small = '';
             }
 
-            $response = Movie::create([       
-                'title' => $request->title,
-                'slug' => Str::slug($request->title),
-                'rand_id' => $rand,
-                'person_id' => $request->person_id,           
-                'user_id' => $request->user_id,  
-                'album' => $request->album,
-                'description' => $request->description,
-                'duration' => $request->duration,
+            $response = Network::create([
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
                 'country' => $request->country,
-                'network' => json_encode($request->network),
-                'genre' => json_encode($request->genre),
+                'site' => $request->site,
                 'status' => $request->status,
                 'original' => $original,
                 'medium' => $medium,
                 'small' => $small,
             ]);
-            
+           
             // unset();
 
             return response()->json([
                 "success" => true,
-                "message" => "Movie successfully added!",
+                "message" => "Network successfully added!",
                 "data" => $response
             ]);
         } catch (\Exception $e) {
@@ -122,12 +106,12 @@ class MovieController extends Controller
      */
     public function show($id)
     {
-        $movie = Movie::find($id);
+        $network = Network::find($id);
 
         return response()->json([
             "success" => true,
-            "message" => "movie berhasil ditampilkan!",
-            "data" => $movie 
+            "message" => "network berhasil ditampilkan!",
+            "data" => $network 
         ]);
     }
 
@@ -141,19 +125,11 @@ class MovieController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
-            'person_id' => 'required|numeric',            
-            'user_id' => 'required|numeric',            
-            'album' => 'required|string',
-            'description' => 'required|string',
-            'audio' => 'required|string',
-            'duration' => 'required|numeric',
-            'country' => 'required|string',
-            'network' => 'required',
-            'genre' => 'required',
+            'name' => 'required|string',
+            'country' => 'required',
+            'site' => 'required',
             'status' => 'required|string',
             // 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
-            // 'audio' => 'nullable|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
             'original' => '',
             'medium' => '',
             'small' => '',
@@ -165,16 +141,16 @@ class MovieController extends Controller
 
         // $user = auth()->user();
 
-        // $movie = Movie::find($id);
-        // if ($user->id != $movie->user_id) {
+        // $network = Network::find($id);
+        // if ($user->id != $article->user_id) {
         //     return response()->json([
         //         "success" => false,
-        //         "message" => "Kamu bukan pemilik movie",
+        //         "message" => "Kamu bukan pemilik network",
         //     ], 403);
         // }
-        // $movie->name = $request->name;
-        // $movie->slug = Str::slug($request->name);
-        // $movie->save();
+        // $network->name = $request->name;
+        // $network->slug = Str::slug($request->name);
+        // $network->save();
 
         try {
             $image = $request->file('image');
@@ -184,9 +160,9 @@ class MovieController extends Controller
                 // delete image
 			    $this->_deleteImage($id);
 
-                $name = Str::slug($request->title) . '_' . time();
+                $name = Str::slug($request->name) . '_' . time();
                 $fileName = $name . '.' . $image->getClientOriginalExtension();
-                $folder = Movie::UPLOAD_DIR;
+                $folder = Network::UPLOAD_DIR;
                 $filePath = $image->storeAs($folder . '/original', $fileName, 'public');
                 $resizedImage = $this->_resizeImage($image, $fileName, $folder);
 
@@ -199,18 +175,11 @@ class MovieController extends Controller
                 $small = '';
             }
 
-            $response = Movie::where('id', $id)->update([
-                'title' => $request->title,
-                'slug' => Str::slug($request->title),
-                'rand_id' => $rand,
-                'person_id' => $request->person_id,           
-                'user_id' => $request->user_id,  
-                'album' => $request->album,
-                'description' => $request->description,
-                'duration' => $request->duration,
+            $response = Network::where('id', $id)->update([
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
                 'country' => $request->country,
-                'network' => json_encode($request->network),
-                'genre' => json_encode($request->genre),
+                'site' => $request->site,
                 'status' => $request->status,
                 'original' => $original,
                 'medium' => $medium,
@@ -221,7 +190,7 @@ class MovieController extends Controller
 
             return response()->json([
                 "success" => true,
-                "message" => "Movie successfully added!",
+                "message" => "Network successfully added!",
                 "data" => $response
             ]);
         } catch (\Exception $e) {
@@ -242,19 +211,19 @@ class MovieController extends Controller
     public function destroy($id)
     {
         // $user = auth()->user();
-        $movie = Movie::find($id);
-        // if ($user->id != $movie->user_id) {
+        $network = Network::find($id);
+        // if ($user->id != $article->user_id) {
         //     return response()->json([
         //         "success" => false,
         //         "message" => "Kamu bukan pemilik artikel",
         //     ], 403);
         // }
-        $movie->delete();
+        $network->delete();
 
         return response()->json([
             "success" => true,
-            "message" => "movie successfully deleted!",
-            "data" => $movie
+            "message" => "network successfully deleted!",
+            "data" => $network
         ]);
     }
 
@@ -263,7 +232,7 @@ class MovieController extends Controller
 		$resizedImage = [];
 
 		$smallImageFilePath = $folder . '/small/' . $fileName;
-		$size = explode('x', Movie::SMALL);
+		$size = explode('x', Network::SMALL);
 		list($width, $height) = $size;
 
 		$smallImageFile = Image::make($image)->fit($width, $height)->stream();
@@ -272,7 +241,7 @@ class MovieController extends Controller
 		}
 		
 		$mediumImageFilePath = $folder . '/medium/' . $fileName;
-		$size = explode('x', Movie::MEDIUM);
+		$size = explode('x', Network::MEDIUM);
 		list($width, $height) = $size;
 
 		$mediumImageFile = Image::make($image)->fit($width, $height)->stream();
@@ -280,17 +249,17 @@ class MovieController extends Controller
 			$resizedImage['medium'] = $mediumImageFilePath;
 		}
 
-		$largeImageFilePath = $folder . '/large/' . $fileName;
-		$size = explode('x', Movie::LARGE);
-		list($width, $height) = $size;
+		// $largeImageFilePath = $folder . '/large/' . $fileName;
+		// $size = explode('x', Network::LARGE);
+		// list($width, $height) = $size;
 
-		$largeImageFile = Image::make($image)->fit($width, $height)->stream();
-		if (Storage::put('public/' . $largeImageFilePath, $largeImageFile)) {
-			$resizedImage['large'] = $largeImageFilePath;
-		}
+		// $largeImageFile = Image::make($image)->fit($width, $height)->stream();
+		// if (Storage::put('public/' . $largeImageFilePath, $largeImageFile)) {
+		// 	$resizedImage['large'] = $largeImageFilePath;
+		// }
 
 		// $extraLargeImageFilePath  = $folder . '/xlarge/' . $fileName;
-		// $size = explode('x', Movie::EXTRA_LARGE);
+		// $size = explode('x', Network::EXTRA_LARGE);
 		// list($width, $height) = $size;
 
 		// $extraLargeImageFile = Image::make($image)->fit($width, $height)->stream();
@@ -302,27 +271,27 @@ class MovieController extends Controller
 	}
 
     private function _deleteImage($id = null) {
-        $movieImage = Movie::where(['id' => $id])->first();
+        $networkImage = Network::where(['id' => $id])->first();
 		$path = 'storage/';
 		
-        // if (file_exists($path.$movieImage->extra_large)) {
-        //     unlink($path.$movieImage->extra_large);
+        // if (file_exists($path.$networkImage->extra_large)) {
+        //     unlink($path.$networkImage->extra_large);
 		// }
 
-        if (file_exists($path.$movieImage->large)) {
-            unlink($path.$movieImage->large);
-        }
+        // if (file_exists($path.$networkImage->large)) {
+        //     unlink($path.$networkImage->large);
+        // }
 
-        if (Storage::exists($path.$movieImage->original)) {
-            Storage::delete($path.$movieImage->original);
+        if (Storage::exists($path.$networkImage->original)) {
+            Storage::delete($path.$networkImage->original);
 		}
 		
-		if (Storage::exists($path.$movieImage->medium)) {
-            Storage::delete($path.$movieImage->medium);
+		if (Storage::exists($path.$networkImage->medium)) {
+            Storage::delete($path.$networkImage->medium);
         }
 
-        if (Storage::exists($path.$movieImage->small)) {
-            Storage::delete($path.$movieImage->small);
+        if (Storage::exists($path.$networkImage->small)) {
+            Storage::delete($path.$networkImage->small);
         }        
 
         return true;

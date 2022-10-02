@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -14,7 +18,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::get();
+
+        return response()->json([
+            "success" => true,
+            "message" => "Category berhasil ditampilkan!",
+            "data" => $categories
+        ]);
     }
 
     /**
@@ -25,7 +35,28 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            // 'status' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 422);
+        }
+
+        // $user = auth()->user();
+
+        $category = Category::create([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            // 'status' => 'active'
+        ]);
+
+        return response()->json([
+            "success" => true,
+            "message" => "Category successfully added!",
+            "data" => $category
+        ]);
     }
 
     /**
@@ -36,7 +67,13 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::find($id);
+
+        return response()->json([
+            "success" => true,
+            "message" => "category berhasil ditampilkan!",
+            "data" => $category 
+        ]);
     }
 
     /**
@@ -48,7 +85,39 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            // 'status' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 422);
+        }
+
+        $category = Category::where('id', $id)->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            // 'status' => 'active'
+        ]);
+
+        // $user = auth()->user();
+
+        // $category = Category::find($id);
+        // if ($user->id != $article->user_id) {
+        //     return response()->json([
+        //         "success" => false,
+        //         "message" => "Kamu bukan pemilik category",
+        //     ], 403);
+        // }
+        // $category->name = $request->name;
+        // $category->slug = Str::slug($request->name);
+        // $category->save();
+
+        return response()->json([
+            "success" => true,
+            "message" => "category successfully updated!",
+            "data" => $category
+        ]);
     }
 
     /**
@@ -59,6 +128,20 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // $user = auth()->user();
+        $category = Category::find($id);
+        // if ($user->id != $article->user_id) {
+        //     return response()->json([
+        //         "success" => false,
+        //         "message" => "Kamu bukan pemilik artikel",
+        //     ], 403);
+        // }
+        $category->delete();
+
+        return response()->json([
+            "success" => true,
+            "message" => "category successfully deleted!",
+            "data" => $category
+        ]);
     }
 }

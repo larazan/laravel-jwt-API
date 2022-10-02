@@ -22,6 +22,9 @@ class CreatePersonsTable extends Migration
             $table->dateTime('birth_date');
             $table->string('birth_location');
             $table->string('nationality');
+            $table->string('facebook');
+            $table->string('instagram');
+            $table->string('twitter');
             $table->string('original')->nullable();
             $table->string('large')->nullable();
             $table->string('medium')->nullable();

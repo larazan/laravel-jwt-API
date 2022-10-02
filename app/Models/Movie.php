@@ -27,6 +27,11 @@ class Movie extends Model
         return $this->belongsToMany(Genre::class);
     }
 
+    public function networks()
+    {
+        return $this->belongsToMany(Network::class);
+    }
+
     public function countries()
     {
         return $this->belongsToMany(Country::class);

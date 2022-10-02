@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArticleCommentsTable extends Migration
+class CreateProductFavoritesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateArticleCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('article_comments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('article_id')->constrained('articles')->onUpdate('cascade')->onDelete('cascade');
+        Schema::create('product_favorites', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('article_comment_id');
-            $table->text('body');
+            $table->foreignId('product_id')->constrained('products')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateArticleCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('article_comments');
+        Schema::dropIfExists('product_favorites');
     }
 }

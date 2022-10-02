@@ -24,6 +24,8 @@ class CreateMoviesTable extends Migration
             $table->integer('year');
             $table->integer('country');
             $table->integer('duration');
+            $table->text('network');
+            $table->text('genre');
             $table->string('original');
             $table->string('large');
             $table->string('medium');

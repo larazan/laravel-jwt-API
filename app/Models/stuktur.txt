@@ -1,46 +1,55 @@
-Person
+Person                              PersonController
 
-    Movie
-        MovieCategory
-        Genre
-        Country
-        Tag
+    Movie                           MovieController
+        MovieCategory               MovieCategoryController  
+        Genre                       GenreController
+        Country                     CountryController
+        Tag     
 
-        Season
-            Episode
+        Season                      SeasonController
+            Episode                 EpisodeController
 
-        Discussion
-        Review
-        Rating
+        Discussion                  DiscussionController
+        Review                      ReviewController
+        Rating                      RatingController
 
+        MovieFavorite               MovieFavoriteController
         
-    Music
+    Music                           MusicController
+        MusicFavorite               MusicFavoriteController
 
-    Role
-        Character
+    Role                            RoleController      
+        Character                   CharacterController
 
-Article
-    CategoryArticle
-    Comment
-        Like
+    Comment                         CommentController
+        Like                        LikeController
+
+    Favorite                        FavoriteController
+
+Article                             ArticleController
+    CategoryArticle                 CategoryArticleController
+    ArticleComment                  ArticleCommentController
+        ArticleCommentLike          ArticleCommentLikeController
 
 Ecomm
 
-    Product
-        Brand
-        Category
-        Attribute
+    Product                         ProductController   
+        Brand                       BrandController
+        Category                    CategoryController
+        Attribute                   
         
-        ProductReview
+        ProductReview               ProductReviewController
 
-    Basket
+        ProductFavorite             ProductFavoriteController
 
-    Order
+    Basket                          BasketController
 
-    Shipment
+    Order                           OrderController
 
-User
+    Shipment                        ShipmentController
 
-Slide
+User                                UserController
 
-Setting
+Slide                               SlideController
+
+Setting                             SettingController

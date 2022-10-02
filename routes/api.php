@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\CategoryArticleController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CharacterController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\CommentLikeController;
+use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\DiscussionController;
 use App\Http\Controllers\Api\EpisodeController;
@@ -24,6 +26,11 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonController;
 use App\Http\Controllers\Api\SlideController;
 use App\Http\Controllers\Api\RatingTypeController;
+use App\Http\Controllers\Api\NetworkController;
+use App\Http\Controllers\Api\FavoriteController;
+use App\Http\Controllers\Api\MovieFavoriteController;
+use App\Http\Controllers\Api\MusicFavoriteController;
+use App\Http\Controllers\Api\ProductFavoriteController;
 
 use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\Api\NewPasswordController;
@@ -66,26 +73,44 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function($router) {
 // Route::apiResource('articles', ArticleController::class);
 // Route::apiResource('avatars', AvatarController::class);
 
-// Route::post('article-comment/{id}', [ArticleCommentController::class, 'store']);
-// Route::put('article-comment/{id}', [ArticleCommentController::class, 'update']);
-// Route::delete('article-comment/{id}', [ArticleCommentController::class, 'destroy']);
+Route::post('article-comment/{id}', [ArticleCommentController::class, 'store']);
+Route::post('article-comment/{articleId}/{id}', [ArticleCommentController::class, 'reply']);
+Route::put('article-comment/{id}', [ArticleCommentController::class, 'update']);
+Route::delete('article-comment/{id}', [ArticleCommentController::class, 'destroy']);
+
+Route::post('article-comment-like/{articleId}/{commentId}', [CommentLikeController::class, 'store']);
 
 Route::apiResource('articles', Article::class);
 Route::apiResource('article-category', CategoryArticleController::class);
-// Route::apiResource('comments', CommentController::class);
 
 // Route::apiResource('products', ProductController::class);
-// Route::apiResource('product-category', CategoryController::class);
-// Route::apiResource('brands', BrandController::class);
+Route::apiResource('product-category', CategoryController::class);
+Route::apiResource('brands', BrandController::class);
 
 Route::apiResource('persons', PersonController::class);
 Route::apiResource('roles', RoleController::class);
 Route::apiResource('characters', CharacterController::class);
 
+// Route::apiResource('comments', CommentController::class);
+
+Route::post('comment/{id}', [CommentController::class, 'store']);
+Route::post('comment/{personId}/{id}', [CommentController::class, 'reply']);
+Route::put('comment/{id}', [CommentController::class, 'update']);
+Route::delete('comment/{id}', [CommentController::class, 'destroy']);
+
+Route::post('comment-like/{personId}/{commentId}', [LikeController::class, 'store']);
+
+// Favorite
+Route::post('favorite/{personId}', [FavoriteController::class, 'store']);
+Route::post('favorite-movie/{movieId}', [MovieFavoriteController::class, 'store']);
+Route::post('favorite-music/{musicId}', [MusicFavoriteController::class, 'store']);
+Route::post('favorite-product/{productId}', [ProductFavoriteController::class, 'store']);
+
 Route::apiResource('movies', MovieController::class);
 Route::apiResource('movie-category', MovieCategoryController::class);
 Route::apiResource('genres', GenreController::class);
 Route::apiResource('countries', CountryController::class);
+Route::apiResource('networks', NetworkController::class);
 Route::apiResource('seasons', SeasonController::class);
 Route::apiResource('episodes', EpisodeController::class);
 Route::apiResource('reviews', ReviewController::class);
