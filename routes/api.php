@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonController;
 use App\Http\Controllers\Api\SlideController;
 use App\Http\Controllers\Api\RatingTypeController;
+use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\NetworkController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\MovieFavoriteController;
@@ -73,15 +74,15 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function($router) {
 // Route::apiResource('articles', ArticleController::class);
 // Route::apiResource('avatars', AvatarController::class);
 
+Route::apiResource('articles', Article::class);
+Route::apiResource('article-category', CategoryArticleController::class);
+
 Route::post('article-comment/{id}', [ArticleCommentController::class, 'store']);
 Route::post('article-comment/{articleId}/{id}', [ArticleCommentController::class, 'reply']);
 Route::put('article-comment/{id}', [ArticleCommentController::class, 'update']);
 Route::delete('article-comment/{id}', [ArticleCommentController::class, 'destroy']);
 
 Route::post('article-comment-like/{articleId}/{commentId}', [CommentLikeController::class, 'store']);
-
-Route::apiResource('articles', Article::class);
-Route::apiResource('article-category', CategoryArticleController::class);
 
 // Route::apiResource('products', ProductController::class);
 Route::apiResource('product-category', CategoryController::class);
@@ -114,6 +115,7 @@ Route::apiResource('networks', NetworkController::class);
 Route::apiResource('seasons', SeasonController::class);
 Route::apiResource('episodes', EpisodeController::class);
 Route::apiResource('reviews', ReviewController::class);
+Route::apiResource('ratings', RatingController::class)->only('store', 'update', 'destroy');
 // Route::apiResource('discussions', DiscussionController::class);
 Route::apiResource('rating-type', RatingTypeController::class);
 

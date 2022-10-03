@@ -17,6 +17,8 @@ class CreateRateTypesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->string('definition');
+            $table->text('detail');
             $table->string('status');
             $table->timestamps();
         });
