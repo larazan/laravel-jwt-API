@@ -32,6 +32,7 @@ use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\MovieFavoriteController;
 use App\Http\Controllers\Api\MusicFavoriteController;
 use App\Http\Controllers\Api\ProductFavoriteController;
+use App\Http\Controllers\Api\QuoteController;
 
 use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\Api\NewPasswordController;
@@ -115,10 +116,12 @@ Route::apiResource('networks', NetworkController::class);
 Route::apiResource('seasons', SeasonController::class);
 Route::apiResource('episodes', EpisodeController::class);
 Route::apiResource('reviews', ReviewController::class);
-Route::apiResource('ratings', RatingController::class)->only('store', 'update', 'destroy');
+Route::apiResource('movies/{movie}/ratings', RatingController::class)->only('store', 'update', 'destroy');
 // Route::apiResource('discussions', DiscussionController::class);
 Route::apiResource('rating-type', RatingTypeController::class);
 
 Route::apiResource('musics', MusicController::class);
 Route::apiResource('podcasts', PodcastController::class);
 Route::apiResource('slides', SlideController::class);
+Route::apiResource('quotes', QuoteController::class);
+Route::get('random-quote', [QuoteController::class, 'random']);
